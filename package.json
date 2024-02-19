@@ -11,7 +11,12 @@
     "semver": "^7.6.0"
   },
   "peerDependencies": {
-    "adapt-authoring-api": "github:adapt-security/adapt-authoring-api"
+    "adapt-authoring-adaptframework": "github:adapt-security/adapt-authoring-adaptframework",
+    "adapt-authoring-api": "github:adapt-security/adapt-authoring-api",
+    "adapt-authoring-content": "github:adapt-security/adapt-authoring-content",
+    "adapt-authoring-jsonschema": "github:adapt-security/adapt-authoring-jsonschema",
+    "adapt-authoring-middleware": "github:adapt-security/adapt-authoring-middleware",
+    "adapt-authoring-mongodb": "github:adapt-security/adapt-authoring-mongodb"
   },
   "devDependencies": {
     "eslint": "^8.56.0",
