@@ -65,5 +65,12 @@
     },
     "description": "Plugin ${name}@${newVersion} already exists at a higher version (${existingVersion})",
     "statusCode": 400
+  },
+  "CONTENTPLUGIN_VERSION_MISMATCH": {
+    "data": {
+      "registered": "Plugins that do not match their installed version"
+    },
+    "description": "The installed version of a plugin does not match the registered version",
+    "statusCode": 400
   }
 }
