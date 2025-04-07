@@ -6,7 +6,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
-    "adapt-cli": "github:adaptlearning/adapt-cli#v3.3.1",
+    "adapt-cli": "github:adaptlearning/adapt-cli#v3.3.2",
     "glob": "^11.0.0",
     "semver": "^7.6.0"
   },
