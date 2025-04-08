@@ -4,7 +4,7 @@
       "name": "Name of content plugin",
       "version": "Version of content plugin"
     },
-    "description": "Plugin ${name}@${version} already exists",
+    "description": "Plugin already exists with the same name and version",
     "statusCode": 400
   },
   "CONTENTPLUGIN_ATTR_CLASH": {
@@ -12,14 +12,14 @@
       "name": "Name of content plugin",
       "targetAttribute": "Offending target attribute"
     },
-    "description": "Target attribute '${targetAttribute}' already exists in ${name}",
+    "description": "Target attribute already used in another plugin",
     "statusCode": 400
   },
   "CONTENTPLUGIN_ATTR_MISSING": {
     "data": {
       "name": "Name of content plugin"
     },
-    "description": "Plugin ${name} is missing a targetAttribute value",
+    "description": "Pluginis missing targetAttribute value",
     "statusCode": 400
   },
   "CONTENTPLUGIN_INCOMPAT_FW": {
@@ -29,7 +29,7 @@
       "requiredFramework": "Version of the framework which is required",
       "version": "Version of content plugin"
     },
-    "description": "Plugin ${name}@${version} incompatible with installed framework (requires ${requiredFramework}, found ${installedFramework})",
+    "description": "Plugin incompatible with the installed framework version",
     "statusCode": 400
   },
   "CONTENTPLUGIN_CLI_INSTALL_FAILED": {
@@ -63,7 +63,7 @@
       "name": "Name of content plugin",
       "newVersion": "Version to install"
     },
-    "description": "Plugin ${name}@${newVersion} already exists at a higher version (${existingVersion})",
+    "description": "Plugin already exists at a higher version",
     "statusCode": 400
   },
   "CONTENTPLUGIN_VERSION_MISMATCH": {
