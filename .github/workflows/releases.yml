@@ -23,16 +23,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-      - name: Notify adapt-authoring to update
-        if: github.ref == 'refs/heads/master'
-        run: |
-          curl -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.PARENT_REPO_TOKEN }}" \
-            https://api.github.com/repos/${{ secrets.PARENT_REPO }}/dispatches \
-            -d '{
-              "event_type":"release-module-updated",
-              "client_payload": {
-                "repository": "${{ github.repository }}"
-              }
-            }'
