@@ -1,6 +1,6 @@
 {
   "name": "adapt-authoring-contentplugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Module for managing framework plugins",
   "homepage": "https://github.com/adapt-security/adapt-authoring-contentplugin",
   "main": "index.js",
