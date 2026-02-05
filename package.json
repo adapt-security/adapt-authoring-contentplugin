@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "description": "Module for managing framework plugins",
   "homepage": "https://github.com/adapt-security/adapt-authoring-contentplugin",
+  "repository": "github:adapt-security/adapt-authoring-contentplugin",
   "main": "index.js",
   "type": "module",
   "dependencies": {
