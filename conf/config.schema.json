@@ -7,6 +7,22 @@
       "type": "string",
       "isDirectory": true,
       "default": "$DATA/contentplugins"
+    },
+    "autoUpdate": {
+      "description": "Enable/disable automatic plugin updates",
+      "type": "boolean",
+      "default": false
+    },
+    "updateCron": {
+      "description": "CRON expression for automatic update check interval",
+      "type": "string",
+      "default": "0 0 * * *"
+    },
+    "semverSpecifier": {
+      "description": "Semver range specifier for automatic updates (* for major, ^ for minor, ~ for patch)",
+      "type": "string",
+      "enum": ["~", "^", "*"],
+      "default": "^"
     }
   }
 }
