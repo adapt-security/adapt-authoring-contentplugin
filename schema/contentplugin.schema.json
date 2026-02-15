@@ -6,11 +6,13 @@
   "properties": {
     "name": {
       "description": "Unique name for the plugin",
-      "type": "string"
+      "type": "string",
+      "isSearchable": true
     },
     "displayName": {
       "description": "User-friendly name for the plugin",
-      "type": "string"
+      "type": "string",
+      "isSearchable": true
     },
     "version": {
       "description": "Version number for the plugin",
@@ -39,7 +41,8 @@
     },
     "description": {
       "description": "",
-      "type": "string"
+      "type": "string",
+      "isSearchable": true
     },
     "pluginDependencies": {
       "description": "",
