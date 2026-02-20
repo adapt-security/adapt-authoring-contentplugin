@@ -4,6 +4,9 @@
   "description": "Module for managing framework plugins",
   "homepage": "https://github.com/adapt-security/adapt-authoring-contentplugin",
   "repository": "github:adapt-security/adapt-authoring-contentplugin",
+  "scripts": {
+    "test": "node --test 'tests/**/*.spec.js'"
+  },
   "main": "index.js",
   "type": "module",
   "dependencies": {
