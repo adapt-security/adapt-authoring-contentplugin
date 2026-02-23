@@ -10,6 +10,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "adapt-authoring-core": "^1.7.0",
     "adapt-cli": "^3.3.3",
     "glob": "^13.0.0",
     "semver": "^7.6.0"
@@ -17,7 +18,6 @@
   "peerDependencies": {
     "adapt-authoring-adaptframework": "^1.9.3",
     "adapt-authoring-content": "^1.2.3",
-    "adapt-authoring-core": "^1.7.0",
     "adapt-authoring-jsonschema": "^1.2.0",
     "adapt-authoring-middleware": "^1.0.2",
     "adapt-authoring-mongodb": "^1.1.3"
