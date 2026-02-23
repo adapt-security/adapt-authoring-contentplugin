@@ -4,8 +4,8 @@ import fs from 'fs/promises'
 import path from 'path'
 import os from 'os'
 
+import { readJson } from 'adapt-authoring-core'
 import {
-  readJson,
   backupPluginVersion,
   getMostRecentBackup,
   cleanupOldPluginBackups,
