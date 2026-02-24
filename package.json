@@ -20,7 +20,7 @@
     "adapt-authoring-content": "^2.0.0",
     "adapt-authoring-jsonschema": "^1.2.0",
     "adapt-authoring-middleware": "^1.0.2",
-    "adapt-authoring-mongodb": "^2.0.0"
+    "adapt-authoring-mongodb": "^3.0.0"
   },
   "devDependencies": {
     "@semantic-release/git": "^10.0.1",
