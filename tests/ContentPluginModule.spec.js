@@ -151,18 +151,16 @@ async function installPlugins (plugins, options = { strict: false, force: false 
   return installed
 }
 
-function serveSchema () {
-  return async (req, res, next) => {
-    try {
-      const plugin = await this.get({ name: req.apiData.query.type }) || {}
-      const schema = await this.getSchema(plugin.schemaName)
-      if (!schema) {
-        return res.sendError(this.app.errors.NOT_FOUND.setData({ type: 'schema', id: plugin.schemaName }))
-      }
-      res.type('application/schema+json').json(schema)
-    } catch (e) {
-      return next(e)
+async function serveSchema (req, res, next) {
+  try {
+    const plugin = await this.get({ name: req.apiData.query.type }) || {}
+    const schema = await this.getSchema(plugin.schemaName)
+    if (!schema) {
+      return res.sendError(this.app.errors.NOT_FOUND.setData({ type: 'schema', id: plugin.schemaName }))
     }
+    res.type('application/schema+json').json(schema)
+  } catch (e) {
+    return next(e)
   }
 }
 
@@ -471,11 +469,6 @@ describe('ContentPluginModule', () => {
   // serveSchema
   // -----------------------------------------------------------------------
   describe('serveSchema()', () => {
-    it('should return a middleware function', () => {
-      const middleware = inst.serveSchema()
-      assert.equal(typeof middleware, 'function')
-    })
-
     it('should send schema JSON when found', async () => {
       const schemaData = { type: 'object', properties: {} }
       inst.get = mock.fn(async () => ({ schemaName: 'mySchema' }))
@@ -491,8 +484,7 @@ describe('ContentPluginModule', () => {
       }
       const next = mock.fn()
 
-      const handler = inst.serveSchema()
-      await handler(req, res, next)
+      await inst.serveSchema(req, res, next)
 
       assert.equal(sentType, 'application/schema+json')
       assert.deepEqual(sentJson, schemaData)
@@ -511,8 +503,7 @@ describe('ContentPluginModule', () => {
       }
       const next = mock.fn()
 
-      const handler = inst.serveSchema()
-      await handler(req, res, next)
+      await inst.serveSchema(req, res, next)
 
       assert.equal(res.sendError.mock.callCount(), 1)
     })
@@ -529,8 +520,7 @@ describe('ContentPluginModule', () => {
       }
       const next = mock.fn()
 
-      const handler = inst.serveSchema()
-      await handler(req, res, next)
+      await inst.serveSchema(req, res, next)
 
       // getSchema should be called with undefined (from {}.schemaName)
       assert.equal(inst.getSchema.mock.calls[0].arguments[0], undefined)
@@ -545,8 +535,7 @@ describe('ContentPluginModule', () => {
       const res = { sendError: mock.fn() }
       const next = mock.fn()
 
-      const handler = inst.serveSchema()
-      await handler(req, res, next)
+      await inst.serveSchema(req, res, next)
 
       assert.equal(next.mock.callCount(), 1)
       assert.equal(next.mock.calls[0].arguments[0], testError)

@@ -1,10 +1,9 @@
 {
   "root": "contentplugins",
-  "useDefaultRoutes": false,
   "routes": [
     {
       "route": "/",
-      "handlers": { "get": "default" },
+      "handlers": { "get": "requestHandler" },
       "permissions": { "get": ["read:${scope}"] }
     },
     {
@@ -14,31 +13,63 @@
     },
     {
       "route": "/:_id",
-      "handlers": { "get": "default", "patch": "default", "delete": "default" },
+      "handlers": { "get": "requestHandler", "patch": "requestHandler", "delete": "requestHandler" },
       "permissions": { "get": ["read:${scope}"], "patch": ["write:${scope}"], "delete": ["write:${scope}"] }
     },
     {
       "route": "/query",
       "validate": false,
       "modifying": false,
-      "handlers": { "post": "query" },
+      "handlers": { "post": "queryHandler" },
       "permissions": { "post": ["read:${scope}"] }
     },
     {
       "route": "/install",
       "validate": false,
       "handlers": { "post": "installHandler" },
-      "permissions": { "post": ["install:${scope}"] }
+      "permissions": { "post": ["install:${scope}"] },
+      "meta": {
+        "post": {
+          "summary": "Install a content plugin",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "name": { "type": "string" },
+                    "version": { "type": "string" },
+                    "force": { "type": "boolean", "default": false }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     },
     {
       "route": "/:_id/update",
       "handlers": { "post": "updateHandler" },
-      "permissions": { "post": ["update:${scope}"] }
+      "permissions": { "post": ["update:${scope}"] },
+      "meta": {
+        "post": {
+          "summary": "Update a single content plugin",
+          "parameters": [{ "name": "_id", "in": "path", "description": "Content plugin _id", "required": true }]
+        }
+      }
     },
     {
       "route": "/:_id/uses",
       "handlers": { "get": "usesHandler" },
-      "permissions": { "get": ["read:${scope}"] }
+      "permissions": { "get": ["read:${scope}"] },
+      "meta": {
+        "get": {
+          "summary": "Return courses using a single content plugin",
+          "parameters": [{ "name": "_id", "in": "path", "description": "Content plugin _id", "required": true }]
+        }
+      }
     }
   ]
 }
