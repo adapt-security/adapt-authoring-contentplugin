@@ -5,7 +5,7 @@
     {
       "route": "/",
       "handlers": { "get": "default" },
-      "permissions": { "get": ["read:{scope}"] }
+      "permissions": { "get": ["read:${scope}"] }
     },
     {
       "route": "/schema",
@@ -15,30 +15,30 @@
     {
       "route": "/:_id",
       "handlers": { "get": "default", "patch": "default", "delete": "default" },
-      "permissions": { "get": ["read:{scope}"], "patch": ["write:{scope}"], "delete": ["write:{scope}"] }
+      "permissions": { "get": ["read:${scope}"], "patch": ["write:${scope}"], "delete": ["write:${scope}"] }
     },
     {
       "route": "/query",
       "validate": false,
       "modifying": false,
       "handlers": { "post": "query" },
-      "permissions": { "post": ["read:{scope}"] }
+      "permissions": { "post": ["read:${scope}"] }
     },
     {
       "route": "/install",
       "validate": false,
       "handlers": { "post": "installHandler" },
-      "permissions": { "post": ["install:contentplugins"] }
+      "permissions": { "post": ["install:${scope}"] }
     },
     {
       "route": "/:_id/update",
       "handlers": { "post": "updateHandler" },
-      "permissions": { "post": ["update:contentplugins"] }
+      "permissions": { "post": ["update:${scope}"] }
     },
     {
       "route": "/:_id/uses",
       "handlers": { "get": "usesHandler" },
-      "permissions": { "get": ["read:contentplugins"] }
+      "permissions": { "get": ["read:${scope}"] }
     }
   ]
 }
