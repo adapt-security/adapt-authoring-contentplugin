@@ -10,6 +10,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "adapt-authoring-api": "^3.0.0",
     "adapt-authoring-core": "^2.0.0",
     "adapt-cli": "^3.3.3",
     "glob": "^13.0.0",
