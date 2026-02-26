@@ -65,6 +65,9 @@ function createInstance (overrides = {}) {
         NOT_FOUND: Object.assign(new Error('NOT_FOUND'), {
           code: 'NOT_FOUND',
           setData: mock.fn(function (d) { this.data = d; return this })
+        }),
+        NO_SCHEMA_DEF: Object.assign(new Error('NO_SCHEMA_DEF'), {
+          code: 'NO_SCHEMA_DEF'
         })
       }
     },
@@ -156,7 +159,7 @@ async function serveSchema (req, res, next) {
     const plugin = await this.get({ name: req.apiData.query.type }) || {}
     const schema = await this.getSchema(plugin.schemaName)
     if (!schema) {
-      return next(this.app.errors.NOT_FOUND.setData({ type: 'schema', id: plugin.schemaName }))
+      return next(this.app.errors.NO_SCHEMA_DEF)
     }
     res.type('application/schema+json').json(schema.built)
   } catch (e) {
