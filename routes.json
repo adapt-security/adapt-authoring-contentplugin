@@ -1,4 +1,5 @@
 {
+  "_comment": "Routes are defined explicitly rather than using defaults to omit POST / and PUT /:_id",
   "root": "contentplugins",
   "routes": [
     {
