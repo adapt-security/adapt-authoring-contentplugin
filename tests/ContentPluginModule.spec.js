@@ -205,6 +205,16 @@ async function usesHandler (req, res, next) {
   }
 }
 
+/** Build a mock Express response with chainable status/send/sendError */
+function createMockRes () {
+  const res = {
+    status: mock.fn(function () { return this }),
+    send: mock.fn(),
+    sendError: mock.fn()
+  }
+  return res
+}
+
 // ========================================================================
 // Tests
 // ========================================================================
@@ -579,13 +589,8 @@ describe('ContentPluginModule', () => {
         body: { name: 'myPlugin', version: '1.0.0' },
         fileUpload: { files: { file: [{ filepath: '/tmp/upload/plugin.zip' }] } }
       }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
 
-      await inst.installHandler(req, res, mock.fn())
+      await inst.installHandler(req, createMockRes(), mock.fn())
     })
 
     it('should fall back to body version when no file upload', async () => {
@@ -595,13 +600,8 @@ describe('ContentPluginModule', () => {
       })
 
       const req = { body: { name: 'p', version: '2.0.0' } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
 
-      await inst.installHandler(req, res, mock.fn())
+      await inst.installHandler(req, createMockRes(), mock.fn())
     })
 
     it('should pass force=true when body.force is string "true"', async () => {
@@ -611,13 +611,8 @@ describe('ContentPluginModule', () => {
       })
 
       const req = { body: { name: 'p', version: '1.0.0', force: 'true' } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
 
-      await inst.installHandler(req, res, mock.fn())
+      await inst.installHandler(req, createMockRes(), mock.fn())
     })
 
     it('should pass force=true when body.force is boolean true', async () => {
@@ -627,13 +622,8 @@ describe('ContentPluginModule', () => {
       })
 
       const req = { body: { name: 'p', version: '1.0.0', force: true } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
 
-      await inst.installHandler(req, res, mock.fn())
+      await inst.installHandler(req, createMockRes(), mock.fn())
     })
 
     it('should pass force=false for other values', async () => {
@@ -643,13 +633,8 @@ describe('ContentPluginModule', () => {
       })
 
       const req = { body: { name: 'p', version: '1.0.0', force: 'false' } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
 
-      await inst.installHandler(req, res, mock.fn())
+      await inst.installHandler(req, createMockRes(), mock.fn())
     })
 
     it('should sendError on failure', async () => {
@@ -658,11 +643,7 @@ describe('ContentPluginModule', () => {
       inst.installPlugins = mock.fn(async () => { throw testError })
 
       const req = { body: { name: 'p', version: '1.0.0' } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
+      const res = createMockRes()
 
       await inst.installHandler(req, res, mock.fn())
 
@@ -681,11 +662,7 @@ describe('ContentPluginModule', () => {
         body: { name: 'p', version: '1.0.0' },
         translate: mock.fn((e) => `translated:${e}`)
       }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn(),
-        sendError: mock.fn()
-      }
+      const res = createMockRes()
 
       await inst.installHandler(req, res, mock.fn())
 
@@ -722,10 +699,7 @@ describe('ContentPluginModule', () => {
       inst.updatePlugin = mock.fn(async () => { throw testError })
 
       const req = { params: { _id: 'id123' } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn()
-      }
+      const res = createMockRes()
       const next = mock.fn()
 
       await inst.updateHandler(req, res, next)
@@ -762,16 +736,12 @@ describe('ContentPluginModule', () => {
       inst.getPluginUses = mock.fn(async () => [])
 
       const req = { params: { _id: 'pid1' } }
-      let sentData = null
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn((d) => { sentData = d })
-      }
+      const res = createMockRes()
       const next = mock.fn()
 
       await inst.usesHandler(req, res, next)
 
-      assert.deepEqual(sentData, [])
+      assert.deepEqual(res.send.mock.calls[0].arguments[0], [])
     })
 
     it('should call next with error on failure', async () => {
@@ -779,10 +749,7 @@ describe('ContentPluginModule', () => {
       inst.getPluginUses = mock.fn(async () => { throw testError })
 
       const req = { params: { _id: 'pid1' } }
-      const res = {
-        status: mock.fn(function () { return this }),
-        send: mock.fn()
-      }
+      const res = createMockRes()
       const next = mock.fn()
 
       await inst.usesHandler(req, res, next)
