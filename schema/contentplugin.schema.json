@@ -55,6 +55,11 @@
     "latestCompatibleVersion" : {
       "type": "boolean",
       "isReadOnly": true
+    },
+    "isAddedByDefault": {
+      "description": "Whether the plugin should be added by default for new courses",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": ["framework", "name", "type", "version", "isLocalInstall"]
