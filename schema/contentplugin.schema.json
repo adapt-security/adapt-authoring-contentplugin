@@ -26,6 +26,10 @@
       "description": "Whether the plugin has been installed locally (as opposed to with the CLI)",
       "type": "boolean"
     },
+    "gitUrl": {
+      "description": "The HTTPS git URL this plugin was installed from, if applicable",
+      "type": "string"
+    },
     "isEnabled": {
       "description": "",
       "type": "boolean",
