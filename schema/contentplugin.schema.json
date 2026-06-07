@@ -28,6 +28,11 @@
     },
     "gitUrl": {
       "description": "The HTTPS git URL this plugin was installed from, if applicable",
+      "type": "string",
+      "format": "uri"
+    },
+    "gitRef": {
+      "description": "The git branch, tag, or commit this plugin was installed from, if applicable",
       "type": "string"
     },
     "isEnabled": {
