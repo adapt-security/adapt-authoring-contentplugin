@@ -1,5 +1,8 @@
 {
   "documentation": {
-    "enable": true
+    "enable": true,
+    "manualPages": {
+      "content-plugins.md": "development"
+    }
   }
 }
