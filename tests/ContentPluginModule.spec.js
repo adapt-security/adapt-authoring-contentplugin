@@ -103,6 +103,39 @@ describe('ContentPluginModule.installPlugin()', () => {
         return true
       }
     )
+    assert.equal(insertOrUpdate.mock.callCount(), 0)
+  })
+
+  it('should omit gitRef when the git URL has no ref', async () => {
+    const runCliCommand = mock.fn(async () => [{
+      isInstallSuccessful: true,
+      getInfo: async () => ({ name: 'adapt-hotgrid', version: '2.0.0', targetAttribute: '_component' }),
+      getType: async () => 'component'
+    }])
+    const insertOrUpdate = mock.fn(async (data) => data)
+    const context = {
+      framework: { runCliCommand },
+      insertOrUpdate,
+      processPluginSchemas: mock.fn(async () => {}),
+      app: {
+        errors: {
+          CONTENTPLUGIN_CLI_INSTALL_FAILED: { setData: (data) => Object.assign(new Error('cli failed'), { data }) },
+          CONTENTPLUGIN_ATTR_MISSING: { setData: (data) => Object.assign(new Error('attr missing'), { data }) }
+        }
+      }
+    }
+
+    const result = await ContentPluginModule.prototype.installPlugin.call(
+      context,
+      '',
+      'https://github.com/org/adapt-hotgrid.git',
+      { force: false }
+    )
+
+    const persisted = insertOrUpdate.mock.calls[0].arguments[0]
+    assert.equal(persisted.gitUrl, 'https://github.com/org/adapt-hotgrid.git')
+    assert.equal('gitRef' in persisted, false)
+    assert.equal(result.name, 'adapt-hotgrid')
   })
 })
 
@@ -159,5 +192,33 @@ describe('ContentPluginModule.syncPluginData()', () => {
 
     assert.equal(insertOrUpdate.mock.calls[0].arguments[0].gitUrl, 'https://github.com/org/adapt-hotgrid.git')
     assert.equal(insertOrUpdate.mock.calls[0].arguments[0].gitRef, 'v2.0.0')
+  })
+
+  it('should omit gitRef for git sources without a ref', async () => {
+    const insertOrUpdate = mock.fn(async () => {})
+    const context = {
+      log: mock.fn(),
+      find: async () => [],
+      insertOrUpdate,
+      framework: {
+        runCliCommand: async () => ([
+          {
+            name: 'adapt-hotgrid',
+            matchedVersion: '2.0.0',
+            isLocalSource: false,
+            isGitSource: true,
+            gitUrl: 'https://github.com/org/adapt-hotgrid.git',
+            getInfo: async () => ({ name: 'adapt-hotgrid', version: '2.0.0' }),
+            getType: async () => 'component'
+          }
+        ])
+      }
+    }
+
+    await ContentPluginModule.prototype.syncPluginData.call(context)
+
+    const persisted = insertOrUpdate.mock.calls[0].arguments[0]
+    assert.equal(persisted.gitUrl, 'https://github.com/org/adapt-hotgrid.git')
+    assert.equal('gitRef' in persisted, false)
   })
 })
