@@ -13,6 +13,16 @@
       "permissions": { "get": ["read:schema"] }
     },
     {
+      "route": "/readme",
+      "handlers": { "get": "readmesHandler" },
+      "permissions": { "get": ["read:${scope}"] },
+      "meta": {
+        "get": {
+          "summary": "Return the README of every content plugin, keyed by plugin name"
+        }
+      }
+    },
+    {
       "route": "/:_id",
       "handlers": { "get": "requestHandler", "patch": "requestHandler", "delete": "requestHandler" },
       "permissions": { "get": ["read:${scope}"], "patch": ["write:${scope}"], "delete": ["write:${scope}"] }
@@ -68,6 +78,17 @@
       "meta": {
         "get": {
           "summary": "Return courses using a single content plugin",
+          "parameters": [{ "name": "_id", "in": "path", "description": "Content plugin _id", "required": true }]
+        }
+      }
+    },
+    {
+      "route": "/:_id/readme",
+      "handlers": { "get": "readmeHandler" },
+      "permissions": { "get": ["read:${scope}"] },
+      "meta": {
+        "get": {
+          "summary": "Return the README of a single content plugin",
           "parameters": [{ "name": "_id", "in": "path", "description": "Content plugin _id", "required": true }]
         }
       }

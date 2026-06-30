@@ -104,9 +104,11 @@ Routes are declared explicitly (`routes.json`) to omit the default `POST /` and
 | `DELETE /:_id` | `requestHandler` (uninstall) | `write:contentplugins` |
 | `POST /query` | `queryHandler` | `read:contentplugins` |
 | `GET /schema` | `serveSchema` | `read:schema` |
+| `GET /readme` | `readmesHandler` | `read:contentplugins` |
 | `POST /install` | `installHandler` | `install:contentplugins` |
 | `POST /:_id/update` | `updateHandler` | `update:contentplugins` |
 | `GET /:_id/uses` | `usesHandler` | `read:contentplugins` |
+| `GET /:_id/readme` | `readmeHandler` | `read:contentplugins` |
 
 ### Install
 
@@ -143,6 +145,18 @@ affected course content between the old and new plugin versions.
 the offending courses) if any course's `_enabledPlugins` references it.
 Otherwise deregisters the plugin's schemas, runs CLI `uninstallPlugins`, then
 deletes the DB record.
+
+### READMEs
+
+Each plugin ships a `README.md` in its framework source directory
+(`<frameworkDir>/src/{components,extensions,menu,theme}/<name>/README.md`).
+`getReadmes(name?)` reads them via `getPluginReadmes` and returns a
+`{ <pluginName>: <markdown> }` map.
+
+- `GET /api/contentplugins/readme` returns the map for every installed plugin
+  (plugins with no `README.md` are omitted).
+- `GET /api/contentplugins/:_id/readme` looks the plugin up by `_id` and returns
+  `{ name, readme }`, throwing `NOT_FOUND` if the plugin or its README is absent.
 
 ## Backup & restore
 
