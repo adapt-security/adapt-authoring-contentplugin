@@ -10,7 +10,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
-    "adapt-authoring-api": "^3.0.0",
+    "adapt-authoring-api": "^4.0.1",
     "adapt-authoring-core": "^3.0.0",
     "adapt-cli": "^3.3.3",
     "semver": "^7.6.0"
